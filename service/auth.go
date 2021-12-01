@@ -37,17 +37,18 @@ func (s *userservice) RegisterUser(userUser entity.AuthInputs) (formatter.UserFo
 	}
 
 	useruuid, err := uuid.NewV4()
-
 	if err != nil {
 		return formatter.UserFormat{}, err
 	}
+
+	msisdn := "62" + userUser.Msisdn
 
 	var newUser = entity.Auths{
 		ID:        useruuid.String(),
 		Username:  userUser.Username,
 		Password:  string(genPassword),
 		Name:      userUser.Name,
-		Msisdn:    userUser.Msisdn,
+		Msisdn:    msisdn,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}

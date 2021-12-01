@@ -3,14 +3,13 @@ package handler
 import (
 	"popaket/auth"
 	"popaket/helper"
-	"popaket/service"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
 
 //middleware
-func Middleware(userService service.UserService, authService auth.Service) gin.HandlerFunc {
+func Middleware(authService auth.Service) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 
@@ -45,9 +44,7 @@ func Middleware(userService service.UserService, authService auth.Service) gin.H
 			userID = claim["user_id"].(string)
 		}
 
-		c.Set("currentUser", gin.H{
-			"user_id": userID,
-		})
+		c.Set("currentUser", userID)
 	}
 }
 

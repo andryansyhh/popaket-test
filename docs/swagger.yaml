@@ -1,0 +1,149 @@
+definitions:
+  entity.AuthInputs:
+    properties:
+      msisdn:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - msisdn
+    - name
+    - password
+    - username
+    type: object
+  entity.LoginAuthInputs:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  helper.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+  helper.Response:
+    properties:
+      data: {}
+      meta:
+        $ref: '#/definitions/helper.Meta'
+    type: object
+info:
+  contact: {}
+paths:
+  /popaket/logistic:
+    get:
+      consumes:
+      - application/json
+      description: Get All Logistics
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - Auth: []
+      summary: Get All Logistics
+      tags:
+      - logistic
+  /popaket/logistic/filter:
+    get:
+      consumes:
+      - application/json
+      description: Get logistic by param
+      parameters:
+      - description: origin_name
+        in: query
+        name: origin_name
+        required: true
+        type: string
+      - description: destination_name
+        in: query
+        name: destination_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Get Logistic by param
+      tags:
+      - logistic
+  /popaket/users/jwt:
+    get:
+      consumes:
+      - application/json
+      description: Get claim jwt user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      security:
+      - Authorization: []
+      summary: Get claim jwt user
+      tags:
+      - user
+  /popaket/users/login:
+    post:
+      description: Login for user
+      operationId: Authentication
+      parameters:
+      - description: Login user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entity.LoginAuthInputs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Login for user
+      tags:
+      - user
+  /popaket/users/register:
+    post:
+      consumes:
+      - application/json
+      description: Create new User account
+      parameters:
+      - description: create user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/entity.AuthInputs'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Create new User account
+      tags:
+      - user
+swagger: "2.0"

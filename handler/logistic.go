@@ -15,7 +15,15 @@ func NewLogisticHandler(logisticService service.LogisticService) *logisticHandle
 	return &logisticHandler{logisticService}
 }
 
-// show logistic handler
+// ShowAllLogistics godoc
+// @Security Auth
+// @Summary Get All Logistics
+// @Description Get All Logistics
+// @Tags logistic
+// @Accept json
+// @Produce json
+// @success 200 {object} helper.Response
+// @Router /popaket/logistic [get]
 func (h *logisticHandler) ShowAllLogistiHandler(c *gin.Context) {
 	logistic, err := h.logisticService.ShowAllLogistic()
 
@@ -29,7 +37,16 @@ func (h *logisticHandler) ShowAllLogistiHandler(c *gin.Context) {
 	c.JSON(200, response)
 }
 
-// show logistic by param handler
+// ShowLogisticWithParam godoc
+// @Summary Get Logistic by param
+// @Description Get logistic by param
+// @Tags logistic
+// @Accept json
+// @Produce json
+// @Param origin_name query string true "origin_name"
+// @Param destination_name query string true "destination_name"
+// @Success 200 {object} helper.Response
+// @Router /popaket/logistic/filter [get]
 func (h *logisticHandler) ShowAllLogistiByParamHandler(c *gin.Context) {
 	destination := c.Params.ByName("destination_name")
 	origin := c.Params.ByName("origin_name")

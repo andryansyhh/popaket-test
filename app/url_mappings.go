@@ -25,9 +25,10 @@ var (
 func RegisterApi(r *gin.Engine) {
 	api := r.Group("/popaket")
 	{
-		// user
+		// auth
 		api.POST("/users/register", userHandler.RegisterUserHandler)
 		api.POST("/users/login", userHandler.LoginUserHandler)
+		api.GET("users/jwt", handler.Middleware(authService), userHandler.JwtHandler)
 
 		//product
 		api.GET("/logistic", logisticHandler.ShowAllLogistiHandler)

@@ -18,7 +18,15 @@ func NewUserHandler(userService service.UserService, authService auth.Service) *
 	return &userHandler{userService, authService}
 }
 
-// create user or register handler
+// CreateUser godoc
+// @Summary Create new User account
+// @Description Create new User account
+// @Tags user
+// @Accept json
+// @Produce json
+// @Param user body entity.AuthInputs true "create user"
+// @Success 201 {object} helper.Response
+// @Router /popaket/users/register [post]
 func (h *userHandler) RegisterUserHandler(c *gin.Context) {
 	var inputUser entity.AuthInputs
 
@@ -50,7 +58,16 @@ func (h *userHandler) RegisterUserHandler(c *gin.Context) {
 	c.JSON(201, response)
 }
 
-// login user handler
+// Loginuser godoc
+// @Summary Login for user
+// @Description Login for user
+// @Tags user
+// @ID Authentication
+// @Consume json
+// @Produce json
+// @Param user body entity.LoginAuthInputs true "Login user"
+// @Success 200 {object} helper.Response
+// @Router /popaket/users/login [post]
 func (h *userHandler) LoginUserHandler(c *gin.Context) {
 	var inputLoginUser entity.LoginAuthInputs
 
@@ -80,4 +97,19 @@ func (h *userHandler) LoginUserHandler(c *gin.Context) {
 	}
 	response := helper.APIResponse("success login user", 200, "success", gin.H{"token": token, "id": userData.ID})
 	c.JSON(200, response)
+}
+
+// JwtUser godoc
+// @Security Authorization
+// @Summary Get claim jwt user
+// @Description Get claim jwt user
+// @Tags user
+// @Accept json
+// @Produce json
+// @success 200 {object} helper.Response
+// @Router /popaket/users/jwt [get]
+func (h *userHandler) JwtHandler(c *gin.Context) {
+	id := c.MustGet("currentUser").(string)
+
+	c.JSON(200, gin.H{"claims": id})
 }
