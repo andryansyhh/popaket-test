@@ -8,3 +8,5 @@
    - DB_NAME =  (database name)
    - DB_PORT = (database port)
 3. and running the apps using `go run .` or `go run main.go`
+4. collection Postman 
+   - https://www.getpostman.com/collections/d3361108403b885926fc
