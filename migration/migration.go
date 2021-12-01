@@ -2,7 +2,7 @@ package migration
 
 import "time"
 
-type Users struct {
+type Auths struct {
 	ID        string `gorm:"PrimaryKey"`
 	Username  string `gorm:"unique"`
 	Password  string

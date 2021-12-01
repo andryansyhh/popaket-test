@@ -32,7 +32,7 @@ func Connection() *gorm.DB {
 	}
 
 	//migration
-	db.AutoMigrate(&migration.Users{})
+	db.AutoMigrate(&migration.Auths{})
 	db.AutoMigrate(&migration.Logistics{})
 
 	return db

@@ -17,7 +17,7 @@ type UserDeleteFormat struct {
 	TimeDelete time.Time `json:"time_delete"`
 }
 
-func FormatUser(user entity.Users) UserFormat {
+func FormatUser(user entity.Auths) UserFormat {
 	var formatUser = UserFormat{
 		ID:       user.ID,
 		Username: user.Username,

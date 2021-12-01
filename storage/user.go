@@ -7,8 +7,8 @@ import (
 )
 
 type UserDao interface {
-	RegisterUser(user entity.Users) (entity.Users, error)
-	FindUserByUsername(username string) (entity.Users, error)
+	RegisterUser(user entity.Auths) (entity.Auths, error)
+	FindUserByUsername(username string) (entity.Auths, error)
 }
 
 type dao struct {
@@ -19,7 +19,7 @@ func NewDao(db *gorm.DB) *dao {
 	return &dao{db}
 }
 
-func (r *dao) RegisterUser(user entity.Users) (entity.Users, error) {
+func (r *dao) RegisterUser(user entity.Auths) (entity.Auths, error) {
 
 	if err := r.db.Create(&user).Error; err != nil {
 		return user, err
@@ -27,8 +27,8 @@ func (r *dao) RegisterUser(user entity.Users) (entity.Users, error) {
 	return user, nil
 }
 
-func (r *dao) FindUserByUsername(username string) (entity.Users, error) {
-	var user entity.Users
+func (r *dao) FindUserByUsername(username string) (entity.Auths, error) {
+	var user entity.Auths
 
 	if err := r.db.Where("username = ?", username).Find(&user).Error; err != nil {
 		return user, err

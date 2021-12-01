@@ -27,5 +27,8 @@ func RegisterApi(r *gin.Engine) {
 		api.POST("/users/register", userHandler.RegisterUserHandler)
 		api.POST("/users/login", userHandler.LoginUserHandler)
 
+		//product
+		api.GET("/logistic")
+
 	}
 }

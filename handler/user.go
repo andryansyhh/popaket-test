@@ -20,7 +20,7 @@ func NewUserHandler(userService service.UserService, authService auth.Service) *
 
 // create user or register handler
 func (h *userHandler) RegisterUserHandler(c *gin.Context) {
-	var inputUser entity.UserInputs
+	var inputUser entity.AuthInputs
 
 	if err := c.ShouldBindJSON(&inputUser); err != nil {
 
@@ -52,7 +52,7 @@ func (h *userHandler) RegisterUserHandler(c *gin.Context) {
 
 // login user handler
 func (h *userHandler) LoginUserHandler(c *gin.Context) {
-	var inputLoginUser entity.LoginUserInputs
+	var inputLoginUser entity.LoginAuthInputs
 
 	if err := c.ShouldBindJSON(&inputLoginUser); err != nil {
 		responseError := helper.APIResponse("input data required", 400, "bad request", gin.H{"errors": err.Error()})

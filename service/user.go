@@ -13,8 +13,8 @@ import (
 )
 
 type UserService interface {
-	RegisterUser(userUser entity.UserInputs) (formatter.UserFormat, error)
-	LoginUser(input entity.LoginUserInputs) (formatter.UserFormat, error)
+	RegisterUser(userUser entity.AuthInputs) (formatter.UserFormat, error)
+	LoginUser(input entity.LoginAuthInputs) (formatter.UserFormat, error)
 }
 
 type userservice struct {
@@ -25,7 +25,7 @@ func NewUserService(dao storage.UserDao) *userservice {
 	return &userservice{dao}
 }
 
-func (s *userservice) RegisterUser(userUser entity.UserInputs) (formatter.UserFormat, error) {
+func (s *userservice) RegisterUser(userUser entity.AuthInputs) (formatter.UserFormat, error) {
 	genPassword, err := bcrypt.GenerateFromPassword([]byte(userUser.Password), bcrypt.MinCost)
 
 	if err != nil {
@@ -42,7 +42,7 @@ func (s *userservice) RegisterUser(userUser entity.UserInputs) (formatter.UserFo
 		return formatter.UserFormat{}, err
 	}
 
-	var newUser = entity.Users{
+	var newUser = entity.Auths{
 		ID:        useruuid.String(),
 		Username:  userUser.Username,
 		Password:  string(genPassword),
@@ -62,7 +62,7 @@ func (s *userservice) RegisterUser(userUser entity.UserInputs) (formatter.UserFo
 	return formatUser, nil
 }
 
-func (s *userservice) LoginUser(input entity.LoginUserInputs) (formatter.UserFormat, error) {
+func (s *userservice) LoginUser(input entity.LoginAuthInputs) (formatter.UserFormat, error) {
 	userUser, err := s.dao.FindUserByUsername(input.Username)
 
 	if err != nil {
